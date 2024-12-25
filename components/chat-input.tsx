@@ -287,7 +287,6 @@ export const ChatInput = () => {
                   >
                     <Navigation03Icon
                       size={18}
-                      variant="stroke"
                       strokeWidth="2"
                     />{" "}
                   </Button>

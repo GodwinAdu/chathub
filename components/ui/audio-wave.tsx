@@ -1,24 +1,9 @@
-import lottie from "lottie-web";
-import { useEffect, useRef } from "react";
-export const AudioWaveSpinner = () => {
-  const animationContainer = useRef<HTMLDivElement>(null);
+"use client"
 
-  useEffect(() => {
-    if (
-      animationContainer.current &&
-      animationContainer?.current?.childNodes?.length === 0
-    ) {
-      const player = lottie.loadAnimation({
-        container: animationContainer.current,
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: "/vMImG9Teup.json",
-      });
-    }
-  }, []);
+import dynamic from "next/dynamic";
 
-  return (
-    <div ref={animationContainer} className="w-10 h-10 overflow-hidden"></div>
-  );
-};
+const AudioWaveSpinner = dynamic(() => import("./AudioWaveSpinnerComponent"), {
+  ssr: false, // Disable server-side rendering for this component
+});
+
+export default AudioWaveSpinner;
