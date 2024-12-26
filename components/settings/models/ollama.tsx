@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../ui/input";
 import { usePreferenceContext } from "@/context/preferences";
-import { useLLMTest } from "@/hooks/use-llm-test";
-import { Button } from "../../ui/button";
-import { Info } from "@phosphor-icons/react";
+import { Button } from "../../ui/button"
 import { Flex } from "@/components/ui/flex";
 import { toast } from "@/hooks/use-toast";
 
 export const OllamaSettings = () => {
   const [url, setURL] = useState<string>("");
   const { preferences, updatePreferences } = usePreferenceContext();
- 
+
   useEffect(() => {
     setURL(preferences.ollamaBaseUrl);
   }, [preferences]);

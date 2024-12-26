@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Flex } from "./ui/flex";
 import { Type } from "./ui/text";
 
-export type TChatExamples = {};
+export type TChatExamples = unknown;
 export const ChatExamples = () => {
   const { allPrompts } = usePromptsContext();
   const { editor } = useChatContext();
@@ -35,7 +35,7 @@ export const ChatExamples = () => {
                 editor?.commands?.focus("end");
               }}
             >
-              <ArrowRight02Icon size={18} variant="solid" strokeWidth="2" />
+              <ArrowRight02Icon size={18} strokeWidth="2" />
               <p className="text-sm md:text-base hover:underline hover:decoration-zinc-500 hover:underline-offset-4 text-zinc-800 dark:text-white font-medium w-full">
                 {example.name}
               </p>

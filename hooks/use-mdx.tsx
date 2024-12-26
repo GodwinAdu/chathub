@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
 import Markdown from "marked-react";
 
-import { CodeBlock } from "@/components/codeblock";
-import { LinkBlock } from "@/components/ui/link-block";
-import { cn } from "@/lib/utils";
+import { CodeBlock } from "@/components/codeblock";;
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { ArrowUpRight, Link } from "@phosphor-icons/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, JSX } from "react";
 
 export const REVEAL_ANIMATION_VARIANTS = {
   hidden: { opacity: 0 },
@@ -26,7 +24,7 @@ export type TLink = {
 };
 
 export const useMarkdown = () => {
-  const [links, setLinks] = useState<TLink[]>([]);
+  const [links] = useState<TLink[]>([]);
   const renderMarkdown = (
     message: string,
     animate: boolean,

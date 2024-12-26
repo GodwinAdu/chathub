@@ -262,7 +262,7 @@ export const useModelList = () => {
     () => [
       ...models,
       ...(ollamaModelsQuery.data?.models?.map(
-        (model: any): TModel => ({
+        (model: { name: string }): TModel => ({
           name: model.name,
           key: model.name,
           tokens: 128000,

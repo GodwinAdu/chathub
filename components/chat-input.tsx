@@ -1,7 +1,5 @@
 import {
-  ArrowDown,
   ArrowElbowDownRight,
-  ArrowUp,
   Stop,
   X,
 } from "@phosphor-icons/react";
@@ -105,7 +103,7 @@ export const ChatInput = () => {
       }
       handleRunModel({
         input: text,
-        sessionId: sessionId.toString(),
+        sessionId: sessionId?.toString() || "",
         assistant: props.assistant,
       });
 

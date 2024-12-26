@@ -5,8 +5,9 @@ import {
   TChatSession,
   useChatSession,
 } from "@/hooks/use-chat-session";
-import { Editor } from "@tiptap/react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+// import { Editor } from "@tiptap/react";
+// import { useParams, useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type TSessionsContext = {
@@ -60,20 +61,22 @@ export const SessionsProvider = ({ children }: TSessionsProvider) => {
     addMessageToSessionMutation,
     getSessionByIdMutation,
     getSessionByIdQuery,
-    addSessionsMutation,
   } = props;
 
   const currentSessionQuery = getSessionByIdQuery;
 
-  const { push, refresh } = useRouter();
+  // const { refresh } = useRouter();
 
   useEffect(() => {
-    sessionsQuery?.data && setSessions(sessionsQuery?.data || []);
+    if (sessionsQuery?.data) {
+      setSessions(sessionsQuery.data || []);
+    }
   }, [sessionsQuery?.data]);
 
   useEffect(() => {
-    currentSessionQuery?.data &&
+    if (currentSessionQuery?.data) {
       setCurrentSession(currentSessionQuery?.data || []);
+    }
   }, [currentSessionQuery?.data]);
 
   useEffect(() => {

@@ -95,7 +95,7 @@ export const AssistantsProvider = ({ children }: TAssistantsProvider) => {
     deleteAssistantMutation,
   } = useModelList();
 
-  const renderAssistants = (type: any) => {
+  const renderAssistants = (type: string) => {
     return assistants
       ?.filter((a) => a.type === type)
       ?.map((assistant) => {

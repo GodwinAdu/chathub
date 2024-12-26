@@ -3,7 +3,7 @@ import { SettingCard } from "./setting-card";
 import { SettingsContainer } from "./settings-container";
 
 export const MemorySettings = () => {
-  const { updatePreferences, preferences } = usePreferenceContext();
+  const { preferences } = usePreferenceContext();
 
   const renderMemory = (memory: string) => {
     return (

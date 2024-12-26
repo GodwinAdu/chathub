@@ -71,16 +71,16 @@ const chatMessageSchema = z.object({
   createdAt: z.string(),
 });
 
-const botSchema = z.object({
-  prompt: z.string(),
-  name: z.string(),
-  description: z.string(),
-  greetingMessage: z.string().optional(),
-  id: z.string(),
-  avatar: z.string().optional(),
-  status: z.string().optional(),
-  deafultBaseModel: z.string().default("gpt-3.5-turbo"),
-});
+// const botSchema = z.object({
+//   prompt: z.string(),
+//   name: z.string(),
+//   description: z.string(),
+//   greetingMessage: z.string().optional(),
+//   id: z.string(),
+//   avatar: z.string().optional(),
+//   status: z.string().optional(),
+//   deafultBaseModel: z.string().default("gpt-3.5-turbo"),
+// });
 
 const sessionSchema = z.object({
   messages: z.array(chatMessageSchema),
@@ -90,7 +90,7 @@ const sessionSchema = z.object({
   updatedAt: z.string().optional(),
 });
 
-const promptSchema = z.object({});
+// const promptSchema = z.object({});
 
 const importSchema = z.object({
   apiKeys: apiSchema.optional(),
@@ -136,7 +136,6 @@ export const Data = () => {
 
   const {
     sessions,
-    addSessionsMutation,
     clearSessionsMutation,
     createSession,
   } = useSessionsContext();
@@ -145,7 +144,6 @@ export const Data = () => {
     preferences,
     apiKeys,
     updatePreferences,
-    updateApiKey,
     updateApiKeys,
   } = usePreferenceContext();
 
@@ -163,18 +161,21 @@ export const Data = () => {
           const jsonData = JSON.parse(content);
           console.log(jsonData);
           const parsedData = importSchema.parse(jsonData, {
-            errorMap: (issue: any, ctx: any) => {
+            errorMap: (issue, ctx) => {
               console.log(issue, ctx);
-              return { message: ctx.defaultError };
+              return { message: ctx.defaultError || "Invalid input" };
             },
           });
-          parsedData?.apiKeys && updateApiKeys(parsedData?.apiKeys);
-          parsedData?.preferences &&
-            updatePreferences(parsedData?.preferences as TPreferences);
+          if (parsedData?.apiKeys) {
+            updateApiKeys(parsedData.apiKeys);
+          }
+          if (parsedData?.preferences) {
+            updatePreferences(parsedData.preferences as TPreferences);
+          }
 
-          const incomingSessions = parsedData?.sessions?.filter(
-            (s) => !!s.messages.length
-          );
+          // const incomingSessions = parsedData?.sessions?.filter(
+          //   (s) => !!s.messages.length
+          // );
 
           // const mergedSessions = mergeSessions(
           //   (incomingSessions as any) || [],

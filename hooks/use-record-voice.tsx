@@ -1,11 +1,10 @@
 "use client";
-import { blobToBase64, createMediaStream } from "@/lib/record";
+import { blobToBase64 } from "@/lib/record";
 import { OpenAI, toFile } from "openai";
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { usePreferenceContext } from "@/context";
 import { useSettingsContext } from "@/context";
 import { Button } from "@/components/ui/button";
-import { Microphone, StopCircle } from "@phosphor-icons/react";
 import { Tooltip } from "@/components/ui/tooltip";
 
 import { RecordIcon, StopIcon } from "hugeicons-react";

@@ -59,7 +59,7 @@ export const WebSearchPlugin = () => {
       } else {
         throw new Error("Invalid response");
       }
-    } catch (error) {
+    } catch {
       toast({
         title: "Test Failed",
         description: "Google search plugin is not working",

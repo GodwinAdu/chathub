@@ -1,10 +1,7 @@
-import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
+// import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 
 import { FC, ReactNode, RefAttributes } from "react";
-import { ModelIcon } from "@/components/model-icon";
-import { Browser, Calculator, Globe } from "@phosphor-icons/react";
-import { TApiKeys, TPreferences, usePreferences } from "./use-preferences";
-import axios from "axios";
+import { TApiKeys, TPreferences } from "./use-preferences";
 import { usePreferenceContext } from "@/context/preferences";
 import { googleSearchTool } from "@/tools/google";
 import { duckduckGoTool } from "@/tools/duckduckgo";
@@ -18,6 +15,7 @@ import {
 } from "hugeicons-react";
 import { TToolResponse } from ".";
 import { memoryTool } from "@/tools/memory";
+import Image from "next/image";
 
 export const toolKeys = ["calculator", "web_search"];
 export type TToolKey = (typeof toolKeys)[number];
@@ -35,11 +33,11 @@ export type TToolArg = {
 export type TTool = {
   key: TToolKey;
   description: string;
-  renderUI?: (args: any) => ReactNode;
+  renderUI?: (args: { image: string }) => ReactNode;
   name: string;
   loadingMessage?: string;
   resultMessage?: string;
-  tool: (args: TToolArg) => any;
+  tool: (args: TToolArg) => Promise<void> | void;
   icon: FC<Omit<HugeiconsProps, "ref"> & RefAttributes<SVGSVGElement>>;
   smallIcon: FC<Omit<HugeiconsProps, "ref"> & RefAttributes<SVGSVGElement>>;
   validate?: () => Promise<boolean>;
@@ -48,16 +46,19 @@ export type TTool = {
 };
 
 export const useTools = () => {
-  const { preferences, updatePreferences, apiKeys } = usePreferenceContext();
+  const { preferences } = usePreferenceContext();
   const { open } = useSettingsContext();
   const tools: TTool[] = [
     {
       key: "web_search",
       description: "Search on web",
-      tool:
-        preferences?.defaultWebSearchEngine === "google"
-          ? googleSearchTool
-          : duckduckGoTool,
+      tool: async (args: TToolArg) => {
+        if (preferences?.defaultWebSearchEngine === "google") {
+          await googleSearchTool(args);
+        } else {
+          await duckduckGoTool(args);
+        }
+      },
       name: "Web Search",
       showInMenu: true,
       loadingMessage:
@@ -87,7 +88,9 @@ export const useTools = () => {
     {
       key: "image_generation",
       description: "Generating images",
-      tool: dalleTool,
+      tool: async (args: TToolArg) => {
+        await dalleTool(args);
+      },
       showInMenu: true,
       name: "Image Generation",
       loadingMessage: "Generating Image",
@@ -99,10 +102,12 @@ export const useTools = () => {
       },
       renderUI: ({ image }) => {
         return (
-          <img
+          <Image
             src={image}
             alt=""
-            className="w-[400px] h-[400px] rounded-2xl border"
+            width={400}
+            height={400}
+            className="rounded-2xl border"
           />
         );
       },
@@ -113,7 +118,9 @@ export const useTools = () => {
     {
       key: "memory",
       description: "AI will remeber things about you",
-      tool: memoryTool,
+      tool: async (args: TToolArg) => {
+        await memoryTool(args);
+      },
       name: "Memory",
       showInMenu: true,
       validate: async () => {
@@ -124,10 +131,12 @@ export const useTools = () => {
       },
       renderUI: ({ image }) => {
         return (
-          <img
+          <Image
             src={image}
             alt=""
-            className="w-[400px] h-[400px] rounded-2xl border"
+            width={400}
+            height={400}
+            className="rounded-2xl border"
           />
         );
       },
@@ -138,10 +147,10 @@ export const useTools = () => {
     },
   ];
 
-  const searchTool = new TavilySearchResults({
-    maxResults: 5,
-    apiKey: "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",
-  });
+  // const searchTool = new TavilySearchResults({
+  //   maxResults: 5,
+  //   apiKey: "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",
+  // });
 
   const getToolByKey = (key: TToolKey) => {
     return tools.find((tool) => tool.key.includes(key));
