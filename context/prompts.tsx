@@ -1,33 +1,14 @@
 "use client";
 
 import { TPrompt, usePrompts } from "@/hooks/use-prompts";
-import { useEditor, EditorContent } from "@tiptap/react";
-import Document from "@tiptap/extension-document";
-import HardBreak from "@tiptap/extension-hard-break";
-import Highlight from "@tiptap/extension-highlight";
-import Paragraph from "@tiptap/extension-paragraph";
-import Placeholder from "@tiptap/extension-placeholder";
-import Text from "@tiptap/extension-text";
-import React, { act, useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  BookBookmark,
-  FolderSimple,
-  Plus,
-} from "@phosphor-icons/react";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+
+
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+
 import { CreatePrompt } from "@/components/prompts/create-prompt";
 import { PromptLibrary } from "@/components/prompts/prompt-library";
 
@@ -82,7 +63,9 @@ export const PromptsProvider = ({ children }: TPromptsProvider) => {
     if (action === "create") {
       setShowCreatePrompt(true);
     } else {
-      action && setTab(action);
+      if (action) {
+        setTab(action);
+      }
     }
     setIsPromptOpen(true);
   };
@@ -121,11 +104,12 @@ export const PromptsProvider = ({ children }: TPromptsProvider) => {
                 createPromptMutation.mutate(prompt);
               }}
               onUpdatePrompt={(prompt) => {
-                editablePrompt?.id &&
+                if (editablePrompt?.id) {
                   updatePromptMutation.mutate({
                     id: editablePrompt?.id,
                     prompt,
                   });
+                }
               }}
             />
           ) : (

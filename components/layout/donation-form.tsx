@@ -1,10 +1,12 @@
-import { useState } from 'react'
-import { usePaystackPayment } from 'react-paystack'
+"use client"
+
+import {  useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { motion } from 'framer-motion'
 import { CreditCard } from 'lucide-react'
+import { usePaystackPayment } from 'react-paystack'
 
 interface DonationFormProps {
     onSuccess: () => void
@@ -19,7 +21,7 @@ const formVariants = {
 export function DonationForm({ onSuccess, onClose }: DonationFormProps) {
     const [amount, setAmount] = useState('')
     const [email, setEmail] = useState('')
-
+    
     const config = {
         currency: "GHS",
         reference: (new Date()).getTime().toString(),

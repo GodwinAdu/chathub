@@ -457,7 +457,7 @@ export const ChatProvider = ({ children }: TChatProvider) => {
       new MessagesPlaceholder("message"),
       [
         "user",
-        "Make this prompt clear and consise? You must strictly answer with only the title, no other text is allowed.\n\nAnswer in English.",
+        "Make this prompt clear and concise? You must strictly answer with only the title, no other text is allowed.\n\nAnswer in English.",
       ],
     ]);
 
@@ -496,7 +496,7 @@ export const ChatProvider = ({ children }: TChatProvider) => {
 
     if (!apiKey && assitantprops.model.baseModel !== "ollama") {
       toast({
-        title: "Ahh!",
+        title: "Oops!",
         description: "API key is missing. Please check your settings.",
         variant: "destructive",
       });

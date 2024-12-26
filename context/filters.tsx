@@ -7,16 +7,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useChatSession } from "@/hooks/use-chat-session";
-import {
-  Chat,
-  Eraser,
-  Moon,
-  Plus,
-  StarFour,
-  Sun,
-  TrashSimple,
-} from "@phosphor-icons/react";
 import moment from "moment";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -168,7 +158,7 @@ export const FiltersProvider = ({ children }: TFiltersProvider) => {
           <CommandGroup heading="Sessions">
             {sortSessions(sessions, "updatedAt")?.map((session) => {
               const assistantProps = getAssistantByKey(
-                session.messages?.[0]?.inputProps?.assistant?.key!
+                session.messages?.[0]?.inputProps?.assistant?.key ?? ""
               );
               return (
                 <CommandItem
