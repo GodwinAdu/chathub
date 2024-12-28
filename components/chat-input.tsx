@@ -182,7 +182,7 @@ export const ChatInput = () => {
   const renderSelectedContext = () => {
     if (contextValue) {
       return (
-        <div className="flex flex-row items-start py-2 ring-1 ring-zinc-100 dark:ring-zinc-700 bg-white border-zinc-100 dark:bg-zinc-800 border dark:border-white/10 text-zinc-700 dark:text-zinc-200 rounded-xl w-full md:w-[700px] lg:w-[720px]  justify-start gap-2 pl-2 pr-2">
+        <div className="flex flex-row items-start py-2 ring-1 ring-zinc-100 dark:ring-zinc-700 bg-white border-zinc-100 dark:bg-zinc-800 border dark:border-white/10 text-zinc-700 dark:text-zinc-200 rounded-xl justify-start gap-2 ">
           <ArrowElbowDownRight size={16} weight="bold" className="mt-1" />
           <p className="w-full overflow-hidden ml-2 text-sm md:text-base line-clamp-2">
             {contextValue}
@@ -203,12 +203,13 @@ export const ChatInput = () => {
   };
 
   return (
+    <>
     <div
-      className={cn(
-        "w-full flex flex-col items-center justify-end md:justify-center absolute bottom-0 px-2 md:px-4 pb-4 pt-16  right-0 gap-2",
-        "bg-gradient-to-t transition-all ease-in-out duration-1000 from-white dark:from-zinc-800 to-transparent from-70% left-0",
-        isFreshSession && "top-0"
-      )}
+    className={cn(
+      "w-full flex flex-col items-center justify-end md:justify-center fixed bottom-0 left-0 right-0 px-2 md:px-4 pb-4 pt-16 gap-2",
+      "bg-gradient-to-t transition-all ease-in-out duration-1000 from-white dark:from-zinc-800 to-transparent from-70%",
+      isFreshSession && "top-0"
+    )}
     >
       {isFreshSession && <ChatGreeting />}
       <div className="flex flex-row items-center gap-2">
@@ -216,7 +217,7 @@ export const ChatInput = () => {
         {renderStopGeneration()}
         {renderListeningIndicator()}
       </div>
-      <div className="flex flex-col gap-3 w-full md:w-[700px] lg:w-[720px]">
+      <div className="flex flex-col gap-1 md:gap-3 md:w-[500px] md:ml-72 lg:w-[720px] w-full">
         {renderSelectedContext()}
         {editor && (
           <PromptsBotsCombo
@@ -296,5 +297,6 @@ export const ChatInput = () => {
       </div>
       {isFreshSession && <ChatExamples />}
     </div>
+    </>
   );
 };

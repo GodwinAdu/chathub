@@ -1,4 +1,5 @@
 "use client";
+
 import { CommonSettings } from "@/components/settings/common";
 import { Data } from "@/components/settings/data";
 import { MemorySettings } from "@/components/settings/memory";
@@ -16,9 +17,7 @@ import {
   SparklesIcon,
   VoiceIcon,
 } from "hugeicons-react";
-import { useState } from "react";
-
-import { createContext, useContext } from "react";
+import { useState, createContext, useContext } from "react";
 
 export type TSettingsContext = {
   open: (menu?: string) => void;
@@ -31,7 +30,7 @@ export const SettingsContext = createContext<undefined | TSettingsContext>(
 export const useSettingsContext = () => {
   const context = useContext(SettingsContext);
   if (context === undefined) {
-    throw new Error("useSettings must be used within a SettingssProvider");
+    throw new Error("useSettings must be used within a SettingsProvider");
   }
   return context;
 };
@@ -46,6 +45,7 @@ export type TSettingMenuItem = {
   icon: () => React.ReactNode;
   component: React.ReactNode;
 };
+
 export const SettingsProvider = ({ children }: TSettingsProvider) => {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("common");
@@ -91,7 +91,7 @@ export const SettingsProvider = ({ children }: TSettingsProvider) => {
     {
       name: "Data",
       icon: () => <Database02Icon size={18} strokeWidth="2" />,
-      key: "Your Data",
+      key: "data",
       component: <Data />,
     },
   ];
@@ -105,35 +105,43 @@ export const SettingsProvider = ({ children }: TSettingsProvider) => {
       {children}
 
       <Dialog open={isSettingOpen} onOpenChange={setIsSettingOpen}>
-        <DialogContent className=" rounded-2xl  gap-0  flex flex-col overflow-hidden border border-white/5 p-0 py-5">
-          <div className="w-full flex items-center gap-8 px-4 py-3 border-b border-zinc-500/20">
+        <DialogContent className="rounded-2xl gap-0 flex flex-col overflow-hidden border border-white/5 p-0 py-5 ">
+          {/* Header */}
+          <div className=" flex items-center justify-between gap-4 px-4 py-3 border-b border-zinc-500/20  w-[99%] max-w-4xl">
             <p className="text-md font-medium">Settings</p>
-            <div className="">
+            <div className="flex gap-1">
               {settingMenu.map((menu) => (
                 <Button
                   variant={selectedMenu === menu.key ? "secondary" : "ghost"}
                   key={menu.key}
                   onClick={() => setSelectedMenu(menu.key)}
-                  className=" gap-2 px-2"
+                  className={cn(
+                    "flex items-center justify-center gap-1",
+                    "text-xs"
+                  )}
                   size="default"
                 >
-                  <div className="w-6 h-6 flex flex-row items-center justify-center">
+                  <div className="w-4 h-4 flex items-center justify-center">
                     {menu.icon()}
                   </div>
-                  <span
-                    className={cn(
-                      "text-xs md:text-sm md:flex font-medium",
-                      selectedMenu === menu.key ? "flex" : "hidden"
-                    )}
-                  >
-                    {menu.name}
-                  </span>
+                  {selectedMenu === menu.key && (
+                    <span
+                      className={cn(
+                        "hidden md:block text-sm font-medium",
+                        "transition-opacity duration-300"
+                      )}
+                    >
+                      {menu.name}
+                    </span>
+                  )}
                 </Button>
               ))}
             </div>
           </div>
-          <div className="flex  w-full relative h-full overflow-hidden">
-            <div className="md:ml-[220px] mt-12 md:mt-0 pb-16 w-full h-full overflow-y-auto no-scrollbar">
+
+          {/* Content */}
+          <div className="flex flex-col w-full h-full overflow-hidden">
+            <div className="flex-grow w-full overflow-y-auto no-scrollbar">
               {selectedMenuItem?.component}
             </div>
           </div>

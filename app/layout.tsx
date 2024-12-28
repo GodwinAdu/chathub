@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { ConfirmProvider, PreferenceProvider, ReactQueryProvider, SessionsProvider, SettingsProvider } from "@/context";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,7 +49,12 @@ export default function RootLayout({
               <ConfirmProvider>
                 <PreferenceProvider>
                   <SessionsProvider>
-                    <SettingsProvider>{children}</SettingsProvider>
+                    <SettingsProvider>
+                      <>
+                        {children}
+                        <Toaster />
+                      </>
+                    </SettingsProvider>
                   </SessionsProvider>
                 </PreferenceProvider>
               </ConfirmProvider>

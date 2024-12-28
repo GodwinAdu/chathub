@@ -18,7 +18,7 @@ export const ChatExamples = () => {
         <Type size="sm" textColor="tertiary">
           Try Prompts
         </Type>
-        <div className="flex flex-col gap-1 md:gap-3 md:w-[700px] lg:w-[720px] w-full">
+        <div className="flex flex-col gap-1 md:gap-3 md:w-[400px] lg:w-[720px] w-full">
           {allPrompts.slice(0, 3)?.map((example, index) => (
             <motion.div
               initial={{

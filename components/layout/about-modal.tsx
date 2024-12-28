@@ -14,7 +14,7 @@ interface AboutModalProps {
 export function AboutModal({ isOpen, onClose }: AboutModalProps) {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="w-[965] max-w-4xl h-[80%] overflow-auto">
+            <DialogContent className="w-[96%] max-w-4xl h-[80%] overflow-auto">
                 <DialogHeader>
                     <DialogTitle className="py-2">About Chat Hub</DialogTitle>
                     <DialogDescription>

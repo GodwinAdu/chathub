@@ -1,11 +1,12 @@
-import { MainLayout } from "@/components/layout/main-layout";
+import { AppSidebar } from "@/components/layout/sidebar/app-sidebar";
+import Navbar from "@/components/layout/sidebar/Navbar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import {
   AssistantsProvider,
   ChatProvider,
   FiltersProvider,
   PromptsProvider,
 } from "@/context";
-import React from "react";
 
 export default function ChatLayout({
   children,
@@ -17,7 +18,15 @@ export default function ChatLayout({
       <FiltersProvider>
         <AssistantsProvider>
           <PromptsProvider>
-            <MainLayout>{children}</MainLayout>
+            <SidebarProvider>
+              <>
+                <AppSidebar />
+                <SidebarInset>
+                  <Navbar />
+                    {children}
+                </SidebarInset>
+              </>
+            </SidebarProvider>
           </PromptsProvider>
         </AssistantsProvider>
       </FiltersProvider>

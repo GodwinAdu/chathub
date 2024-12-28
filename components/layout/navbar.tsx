@@ -87,7 +87,7 @@ export const Navbar = () => {
               openSettings();
             }}
           >
-            <Settings03Icon size={20} strokeWidth="2" />
+          <Settings03Icon size={20} strokeWidth="2" />  
           </Button>
         </Tooltip>
         <DropdownMenu
@@ -105,7 +105,7 @@ export const Navbar = () => {
             </DropdownMenuTrigger>
           </Tooltip>
           <DropdownMenuContent
-            className="min-w-[250px] text-sm md:text-base mr-2"
+            className="min-w-[250px] text-sm md:text-base mr-20"
             align="end"
             side="left"
             sideOffset={4}
